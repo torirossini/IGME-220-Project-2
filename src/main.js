@@ -23,34 +23,34 @@ const drawParams = {
 // 1 - here we are faking an enumeration
 const DEFAULTS = Object.freeze({
 	//sound1  :  "media/New Adventure Theme.mp3",
-    /*K_Q*/ 81 :  "media/notes/a-3.mp3",
-    /*K_W*/ 87 :  "media/notes/a-4.mp3",
-    /*K_E*/ 69 :  "media/notes/a-5.mp3",
-    /*K_R*/ 82 :  "media/notes/a3.mp3",
-    /*K_T*/ 84 :  "media/notes/a4.mp3",
-    /*K_Y*/ 89 :  "media/notes/a5.mp3",
-    /*K_U*/ 85 :  "media/notes/b3.mp3",
-    /*K_I*/ 73 :  "media/notes/b4.mp3",
-    /*K_O*/ 79 :  "media/notes/b5.mp3",
-    /*K_P*/ 80 :  "media/notes/b5.mp3",
+    /*K_Q*/ 81 :  {file:"media/notes/a-3.mp3", note:"A-3"},
+    /*K_W*/ 87 :  {file:"media/notes/a-4.mp3", note:"A-4"},
+    /*K_E*/ 69 :  {file:"media/notes/a-5.mp3", note:"A-5"},
+    /*K_R*/ 82 :  {file:"media/notes/a3.mp3", note:"A3"},
+    /*K_T*/ 84 :  {file:"media/notes/a4.mp3", note:"A4"},
+    /*K_Y*/ 89 :  {file:"media/notes/a5.mp3", note:"A5"},
+    /*K_U*/ 85 :  {file:"media/notes/b3.mp3", note:"B3"},
+    /*K_I*/ 73 :  {file:"media/notes/b4.mp3", note:"B4"},
+    /*K_O*/ 79 :  {file:"media/notes/b5.mp3", note:"B5"},
+    /*K_P*/ 80 :  {file:"media/notes/b5.mp3", note:"B5"},
     
-    /*K_A*/ 65 :  "media/notes/c-3.mp3",
-    /*K_S*/ 83 :  "media/notes/c-4.mp3",
-    /*K_D*/ 68 :  "media/notes/c-5.mp3",
-    /*K_F*/ 70 :  "media/notes/c3.mp3",
-    /*K_G*/ 71 :  "media/notes/c4.mp3",
-    /*K_H*/ 72 :  "media/notes/c5.mp3",
-    /*K_J*/ 74 :  "media/notes/c6.mp3",
-    /*K_K*/ 75 :  "media/notes/d-3.mp3",
-    /*K_L*/ 76 :  "media/notes/d-4.mp3",
+    /*K_A*/ 65 :  {file:"media/notes/c-3.mp3", note:"C-3"},
+    /*K_S*/ 83 :  {file:"media/notes/c-4.mp3", note:"C-4"},
+    /*K_D*/ 68 :  {file:"media/notes/c-5.mp3", note:"C-5"},
+    /*K_F*/ 70 :  {file:"media/notes/c3.mp3", note:"C3"},
+    /*K_G*/ 71 :  {file:"media/notes/c4.mp3", note:"C4"},
+    /*K_H*/ 72 :  {file:"media/notes/c5.mp3", note:"C5"},
+    /*K_J*/ 74 :  {file:"media/notes/c6.mp3", note:"C6"},
+    /*K_K*/ 75 :  {file:"media/notes/d-3.mp3", note:"D-3"},
+    /*K_L*/ 76 :  {file:"media/notes/d-4.mp3", note:"D-4"},
     
-    /*K_Z*/ 90 :  "media/notes/d-5.mp3",
-    /*K_X*/ 88 :  "media/notes/d3.mp3",
-    /*K_C*/ 67 :  "media/notes/d4.mp3",
-    /*K_V*/ 86 :  "media/notes/d5.mp3",
-    /*K_B*/ 66 :  "media/notes/e3.mp3",
-    /*K_N*/ 78 :  "media/notes/e4.mp3",
-    /*K_M*/ 77 :  "media/notes/e5.mp3",
+    /*K_Z*/ 90 :  {file:"media/notes/d-5.mp3", note:"D-5"},
+    /*K_X*/ 88 :  {file:"media/notes/d3.mp3", note:"D3"},
+    /*K_C*/ 67 :  {file:"media/notes/d4.mp3", note:"D4"},
+    /*K_V*/ 86 :  {file:"media/notes/d5.mp3", note:"D5"},
+    /*K_B*/ 66 :  {file:"media/notes/e3.mp3", note:"E3"},
+    /*K_N*/ 78 :  {file:"media/notes/e4.mp3", note:"E4"},
+    /*K_M*/ 77 :  {file:"media/notes/e5.mp3", note:"E5"},
 
 });
 
@@ -62,7 +62,8 @@ var currentKey;
  function updateKeys(e){
     //set current key
     currentKey = e.keyCode;
-    output.innerHTML = "current key: " + currentKey;     playNote(e);
+    output.innerHTML = "current key: " + DEFAULTS[currentKey].note;
+     playNote(e);
  }
 
 function playNote(e){
@@ -71,8 +72,9 @@ function playNote(e){
     if (audio.audioCtx.state == "suspended"){
         audio.audioCtx.resume();
     }
-    
-    audio.loadSoundFile(DEFAULTS[currentKey]);
+    var filepath = DEFAULTS[currentKey].file;
+    console.log(filepath);
+    audio.loadSoundFile(filepath);
     console.log('audioCtx.state after = $(audio.audioCtx.state)');
     
     audio.playCurrentSound();
@@ -195,17 +197,17 @@ function setupUI(canvasElement){
 //    let volumeSlider = document.querySelector("#volumeSlider");
 //    let volumeLabel  = document.querySelector("#volumeLabel");
 //    
-//    //on input event
-//    volumeSlider.oninput = e =>{
-//        //set gain
-//        audio.setVolume(e.target.value);
-//
-//        //update label
-//        volumeLabel.innerHTML = Math.round((e.target.value/2*100));
-//    }
-//	
-//    volumeSlider.dispatchEvent(new Event("input"));
-//    
+    //on input event
+    volumeSlider.oninput = e =>{
+        //set gain
+        audio.setVolume(e.target.value);
+
+        //update label
+        volumeLabel.innerHTML = Math.round((e.target.value/2*100));
+    }
+	
+    volumeSlider.dispatchEvent(new Event("input"));
+    
 //    //D - track input
 //    let trackSelect = document.querySelector("#trackSelect");
 //    

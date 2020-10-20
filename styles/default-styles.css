@@ -1,6 +1,7 @@
 body {
-	background: #eeeeee;
+	background: #0A0908;
 	font-family: tahoma, verdana, sans serif;
+    color:#FFBC42
 }
 
 canvas {
@@ -13,6 +14,7 @@ canvas {
 
 #controls{
   margin-left: 1rem;
+    font-family: 'Rubik', sans-serif;
 }
 
 #volumeLabel{
@@ -36,7 +38,31 @@ button[data-playing="no"]:after{
   content: "Play";
 }
 
-#fsButton{
-  font-size: 1.2rem;
-  width: 8rem;
+#heading{
+    padding: 1.5em;
+    font-family: 'Rubik', sans-serif;
 }
+
+h1{
+    font-family: 'Rubik', sans-serif;
+}
+
+  #fsButton {
+        display: inline-block;
+        background-color: #7b38d8;
+        border-radius: 2em;
+        border: 4px double #cccccc;
+        color: #eeeeee;
+        text-align: center;
+        font-size: 1em;
+        padding: 1em;
+        width: 10em;
+        transition: all 0.3s;
+        cursor: pointer;
+        margin: 5px;
+      }
+
+      #fsButton:hover {
+        background-color: #f7c2f9;
+        width: 12em;
+      }
