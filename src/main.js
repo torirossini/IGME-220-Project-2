@@ -134,11 +134,11 @@ function setupUI(canvasElement){
     // A - hookup fullscreen button
 //    const fsButton = document.querySelector("#fsButton");
 //
-//    // add .onclick event to button
-//    fsButton.onclick = e => {
-//        console.log("init called");
-//        utils.goFullscreen(canvasElement);
-//    };
+    // add .onclick event to button
+    fsButton.onclick = e => {
+        console.log("init called");
+        utils.goFullscreen(canvasElement);
+    };
 //    
 //    const gradientCB = document.querySelector("#gradientCB");
 //    const barsCB = document.querySelector("#barsCB");
@@ -147,19 +147,19 @@ function setupUI(canvasElement){
 //    const embossCB = document.querySelector("#embossCB");
 //    const invertCB = document.querySelector("#invertCB");
 //    
-//    gradientCB.onchange = e =>{
-//        drawParams.showGradient = !drawParams.showGradient;
-//    }
-//    
-//    barsCB.onchange = e =>{
-//        drawParams.showBars = !drawParams.showBars;
-//
-//    }
-//    
-//    circlesCB.onchange = e =>{
-//        drawParams.showCircles = !drawParams.showCircles;
-//
-//    }
+    gradientCB.onchange = e =>{
+        drawParams.showGradient = !drawParams.showGradient;
+    }
+    
+    barsCB.onchange = e =>{
+        drawParams.showBars = !drawParams.showBars;
+
+    }
+    
+    circlesCB.onchange = e =>{
+        drawParams.showCircles = !drawParams.showCircles;
+
+   }
 //    
 //    noiseCB.onchange = e =>{
 //        drawParams.showNoise = !drawParams.showNoise;

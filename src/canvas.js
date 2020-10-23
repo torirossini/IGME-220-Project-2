@@ -75,7 +75,7 @@ function draw(params={}){
     
     if(params.showCircles)
         {
-            let dataWeCareAbout = audioData.length/3;
+
             
             let maxRadius = canvasHeight/2;
             ctx.save();
@@ -84,17 +84,28 @@ function draw(params={}){
             ctx.lineWidth = 3;
             
             ctx.globalAlpha = .5;
+            //console.log(audioData[30]);
             
             ctx.beginPath();
             ctx.moveTo(0, canvasHeight/2);
-            ctx.bezierCurveTo(canvasHeight/2, 
-                              canvasHeight/2, 
-                              canvasHeight/2, 
-                              canvasHeight/2, 
+            ctx.bezierCurveTo(canvasHeight/2 +  audioData[0],
+                              canvasHeight/2 +  audioData[0] * 2, 
+                              canvasHeight/2 +  audioData[30], 
+                              canvasHeight/2 -  audioData[10] * 2, 
                               canvasWidth, 
                               canvasHeight/2);
             ctx.stroke(); 
             
+            
+            ctx.beginPath();
+            ctx.moveTo(0, canvasHeight/2);
+            ctx.bezierCurveTo(canvasHeight/2 -  audioData[0],
+                              canvasHeight/2 -  audioData[0] * 2, 
+                              canvasHeight/2 -  audioData[30], 
+                              canvasHeight/2 +  audioData[10] * 2, 
+                              canvasWidth, 
+                              canvasHeight/2);
+            ctx.stroke(); 
 //            for(let i = 0; i<audioData.length; i++)
 //                {
 //                    let percent = audioData[i]/255;
