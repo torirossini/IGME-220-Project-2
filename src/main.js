@@ -15,8 +15,7 @@ const drawParams = {
     showGradient:true,
     showBars:true,
     showCircles:true,
-    showNoise:false,
-    showEmboss:false,
+    currentFilter:"none",
     invertColors:false
 };
 
@@ -58,6 +57,7 @@ const DEFAULTS = Object.freeze({
 
 var output;
 var currentKey;
+var currentFilter;
 
  function updateKeys(e){
     //set current key
@@ -143,7 +143,13 @@ function setupUI(canvasElement){
 //    const gradientCB = document.querySelector("#gradientCB");
 //    const barsCB = document.querySelector("#barsCB");
 //    const circlesCB = document.querySelector("#circlesCB");
-//    const noiseCB = document.querySelector("#noiseCB");
+    let radioButtons = document.querySelectorAll("input[type=radio][name=filter]");
+    for (let r of radioButtons){
+			r.onchange = function(e){
+				// #7 - form values are returned as Strings, so we have to convert them to a Number
+                drawParams.currentFilter = e.target.value;
+			}
+    }
 //    const embossCB = document.querySelector("#embossCB");
 //    const invertCB = document.querySelector("#invertCB");
 //    
@@ -160,11 +166,7 @@ function setupUI(canvasElement){
         drawParams.showCircles = !drawParams.showCircles;
 
    }
-//    
-//    noiseCB.onchange = e =>{
-//        drawParams.showNoise = !drawParams.showNoise;
-//
-//    }
+    
 //    
 //    embossCB.onchange = e =>{
 //        drawParams.showEmboss = !drawParams.showEmboss;

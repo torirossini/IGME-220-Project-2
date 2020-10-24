@@ -17,8 +17,7 @@ function setupCanvas(canvasElement,analyserNodeRef){
 	ctx = canvasElement.getContext("2d");
 	canvasWidth = canvasElement.width;
 	canvasHeight = canvasElement.height;
-	// create a gradient that runs top to bottom
-	gradient = utils.getLinearGradient(ctx,0,0,0,canvasHeight,[{percent:0,color:"#000000"},{percent:.750,color:"#FED9B7"},{percent:1,color:"#FDFCDC"}]);
+
 	// keep a reference to the analyser node
 	analyserNode = analyserNodeRef;
 	// this is the array where the analyser data will be stored
@@ -44,7 +43,9 @@ function draw(params={}){
     
     if(params.showGradient){
         ctx.save();
-        ctx.fillStyle = gradient;
+        // create a gradient that runs top to bottom
+        gradient = utils.getLinearGradient(ctx,0,0,0,canvasHeight,[{percent:0,color:'rgb(' + audioData[0] + ', ' + audioData[10] + ', ' + audioData[20] + ')'},{percent:.750,color:'rgb(' + audioData[20] + ', ' + audioData[30] + ', ' + audioData[40] + ')'},{percent:1,color:'rgb(' + audioData[50] + ', ' + audioData[60] + ', ' + audioData[70] + ')'}]);
+        ctx.fillStyle = gradient; 
         ctx.globalAlpha = .3;
         ctx.fillRect(0,0,canvasWidth,canvasHeight);
         ctx.restore();
@@ -61,10 +62,18 @@ function draw(params={}){
         let topSpacing = 10;
         
         ctx.save();
-        ctx.fillStyle = 'rgba(0,175,185,0,.50)';
-        ctx.strokeStyle = 'rgba(0,175,185,0,0.50)';
+        
+
         for(let i = 0; i < dataWeCareAbout; i++)
             {
+                
+                let color = 'rgb(' + 
+                audioData[0] + ', ' + 
+                audioData[10] * i/2 + ', ' + 
+                audioData[20] * i/4 + ')'
+                ctx.fillStyle = color;
+                ctx.strokeStyle = color;
+                
                 ctx.fillRect(margin + i * (barWidth + barSpacing), topSpacing + 256 - audioData[i], barWidth, barHeight);
                 ctx.strokeRect(margin + i * (barWidth + barSpacing), topSpacing + 256 - audioData[i], barWidth, barHeight);
             }
@@ -106,6 +115,48 @@ function draw(params={}){
                               canvasWidth, 
                               canvasHeight/2);
             ctx.stroke(); 
+            
+            ctx.beginPath();
+            ctx.moveTo(0, canvasHeight/3);
+            ctx.bezierCurveTo(canvasHeight/3 +  audioData[0],
+                              canvasHeight/3 +  audioData[0] * 2, 
+                              canvasHeight/3 +  audioData[30], 
+                              canvasHeight/3 -  audioData[10] * 2, 
+                              canvasWidth, 
+                              canvasHeight/3);
+            ctx.stroke(); 
+            
+            
+            ctx.beginPath();
+            ctx.moveTo(0, canvasHeight/3);
+            ctx.bezierCurveTo(canvasHeight/3 -  audioData[0],
+                              canvasHeight/3 -  audioData[0] * 2, 
+                              canvasHeight/3 -  audioData[30], 
+                              canvasHeight/3 +  audioData[10] * 2, 
+                              canvasWidth, 
+                              canvasHeight/3);
+            ctx.stroke(); 
+            
+            ctx.beginPath();
+            ctx.moveTo(0, canvasHeight/3*2);
+            ctx.bezierCurveTo(canvasHeight/3*2 +  audioData[0],
+                              canvasHeight/3*2 +  audioData[0] * 2, 
+                              canvasHeight/3*2 +  audioData[30], 
+                              canvasHeight/3*2 -  audioData[10] * 2, 
+                              canvasWidth, 
+                              canvasHeight/3*2);
+            ctx.stroke(); 
+            
+            
+            ctx.beginPath();
+            ctx.moveTo(0, canvasHeight/3*2);
+            ctx.bezierCurveTo(canvasHeight/3*2 -  audioData[0],
+                              canvasHeight/3*2 -  audioData[0] * 2, 
+                              canvasHeight/3*2 -  audioData[30], 
+                              canvasHeight/3*2 +  audioData[10] * 2, 
+                              canvasWidth, 
+                              canvasHeight/3*2);
+            ctx.stroke(); 
 //            for(let i = 0; i<audioData.length; i++)
 //                {
 //                    let percent = audioData[i]/255;
@@ -140,33 +191,39 @@ function draw(params={}){
     for(let i = 0; i<length; i+=4)
         {
 		   // C) randomly change every 20th pixel to red
-           if (params.showNoise && Math.random() <.05)
+           if (params.currentFilter == "grayscale")
                {
                 // data[i] is the red channel
                 // data[i+1] is the green channel
                 // data[i+2] is the blue channel
                 // data[i+3] is the alpha channel
-                data[i] = data[i+1] = data[i+2] = 0; // zero out the red and green and blue channels
-                data[i] = 255;// make the red channel 100% red
+                    var r = data[i];
+                    var g = data[i+1];
+                    var b = data[i+2];
+                    // CIE luminance for the RGB
+                    // The human eye is bad at seeing red and blue, so we de-emphasize them.
+                    var v = 0.2126*r + 0.7152*g + 0.0722*b;
+                    data[i] = data[i+1] = data[i+2] = v
+                   
             } // end if
             
-            if(params.invertColors)
-            {
-                let red = data[i],green = data[i+1], blue = data[i+2];
-                data[i] = 255-red;
-                data[i+1] = 255-green;
-                data[i+2] = 255-blue;
-            }
+//            if(params.invertColors)
+//            {
+//                let red = data[i],green = data[i+1], blue = data[i+2];
+//                data[i] = 255-red;
+//                data[i+1] = 255-green;
+//                data[i+2] = 255-blue;
+//            }
 	} // end for
-    
-    if(params.showEmboss)
-    {
-        for(let i = 0; i< length; i++)
-            {
-                if(i%4 == 3) continue;
-                data[i] = 127 + 2*data[i] - data[i+4] -data[i+width*4];
-            }
-    }
+//    
+//    if(params.showEmboss)
+//    {
+//        for(let i = 0; i< length; i++)
+//            {
+//                if(i%4 == 3) continue;
+//                data[i] = 127 + 2*data[i] - data[i+4] -data[i+width*4];
+//            }
+//    }
     
 
 	// D) copy image data back to canvas

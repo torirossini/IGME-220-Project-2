@@ -59,11 +59,18 @@ the amplitude of that frequency.
 // 7 - create a gain (volume) node
     gainNode = audioCtx.createGain();
     gainNode.gain.value = DEFAULTS.gain;
+    
+
+
+
 
 // 8 - connect the nodes - we now have an audio graph
     sourceNode.connect(analyserNode);
     analyserNode.connect(gainNode);
+    
     gainNode.connect(audioCtx.destination);
+    
+
 
 // make sure that it's a Number rather than a String
 }
