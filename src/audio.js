@@ -9,12 +9,13 @@ let paused = true;
 
 // **These are "private" properties - these will NOT be visible outside of this module (i.e. file)**
 // 2 - WebAudio nodes that are part of our WebAudio audio routing graph
-let element, sourceNode, analyserNode, gainNode;
+let element, sourceNode, analyserNode, pannerNode, gainNode;
 
 // 3 - here we are faking an enumeration
 const DEFAULTS = Object.freeze({
     gain:.5,
-    numSamples:256
+    numSamples:256,
+    pan:1
 });
 
 // 4 - create a new array of 8-bit integers (0-255)
@@ -66,15 +67,14 @@ the amplitude of that frequency.
     gainNode = audioCtx.createGain();
     gainNode.gain.value = DEFAULTS.gain;
     
-
-
+    pannerNode = audioCtx.createStereoPanner();
 
 
 // 8 - connect the nodes - we now have an audio graph
     sourceNode.connect(analyserNode);
     analyserNode.connect(gainNode);
-    
-    gainNode.connect(audioCtx.destination);
+    gainNode.connect(pannerNode);
+    pannerNode.connect(audioCtx.destination);
 
     progressBar = document.querySelector("#progress").getContext('2d'); 
 
@@ -88,11 +88,6 @@ the amplitude of that frequency.
 
     durationEl.innerHTML = utils.convertElapsedTime(0);
     currTimeEl.innerHTML =  utils.convertElapsedTime(currentTime);
-
-    progressBar.save();
-    progressBar.fillStyle = "#000000";
-   console.log(progressBar.width); progressBar.fillRect(0,0,progressEl.width,progressEl.height);
-    progressBar.restore();
 
     loop();
 
@@ -112,7 +107,7 @@ function loop(){
 function updateBar(){
     
     if(!paused)
-        {                progressBar.clearRect(0,0,progressBar.width,50);
+        {                progressBar.clearRect(0,0,progressEl.width,50);
                 progressBar.fillStyle = "#95BF74";
                 progressBar.fillRect(0,0,progressBar.width, progressBar.height);
 
@@ -155,6 +150,10 @@ function setVolume(value){
     gainNode.gain.value = value;
 }
 
+function setPan(value){
+    value = Number(value);
+    pannerNode.pan.value = value;
+}
 
 
-export{audioCtx, setupWebaudio, playCurrentSound, pauseCurrentSound, loadSoundFile, setVolume, analyserNode};
+export{audioCtx, setupWebaudio, playCurrentSound, pauseCurrentSound, loadSoundFile, setVolume, analyserNode, setPan};

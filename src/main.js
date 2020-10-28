@@ -227,6 +227,21 @@ function setupUI(canvasElement){
 	
     volumeSlider.dispatchEvent(new Event("input"));
     
+    //C- hookup pan slider and label
+    let panSlider = document.querySelector("#panSlider");
+    let panLabel  = document.querySelector("#panLabel");
+    
+    //on input event
+    panSlider.oninput = e =>{
+        //set pan
+        audio.setPan(e.target.value);
+
+        //update label
+        panLabel.innerHTML = Math.round((e.target.value/2*100));
+    }
+	
+    panSlider.dispatchEvent(new Event("input"));
+    
     //.onchange events for select
     trackSelect.onchange = e =>{
         audio.loadSoundFile(e.target.value);
