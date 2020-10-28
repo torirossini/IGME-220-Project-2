@@ -21,7 +21,7 @@ const drawParams = {
 
 // 1 - here we are faking an enumeration
 const DEFAULTS = Object.freeze({
-	sound1  :  "media/New Adventure Theme.mp3",
+	sound1  :  "media/flux.mp3",
     /*K_Q*/ 81 :  {file:"media/notes/a-3.mp3", note:"A-3"},
     /*K_W*/ 87 :  {file:"media/notes/a-4.mp3", note:"A-4"},
     /*K_E*/ 69 :  {file:"media/notes/a-5.mp3", note:"A-5"},
@@ -241,6 +241,20 @@ function setupUI(canvasElement){
     }
 	
     panSlider.dispatchEvent(new Event("input"));
+    
+    //C- hookup color slider and label
+    let colorSlider = document.querySelector("#color-slider");
+    let colorLabel  = document.querySelector("#color-label");
+    
+    //on input event
+    colorSlider.oninput = e =>{
+        canvas.setColorScalar(e.target.value);
+
+        //update label
+        colorLabel.innerHTML = Math.round((e.target.value/2*100));
+    }
+	
+    colorSlider.dispatchEvent(new Event("input"));
     
     //.onchange events for select
     trackSelect.onchange = e =>{

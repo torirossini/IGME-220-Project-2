@@ -1,5 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans&family=Noto+Sans&display=swap');
 
+@import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
+
 body {
 	background: #0A0908 !important;
 	font-family: tahoma, verdana, sans serif;
@@ -57,8 +59,9 @@ main{
     width: 50%;
 }
 
-#trackInfo{
+#track-info{
     padding: 1em;
+    padding-top: 2em;
     font-family: 'Noto Sans', sans-serif;
     float: left;
     width: 50%;
@@ -82,7 +85,14 @@ button[data-playing="no"]:after{
 }
 
 h1{
-font-family: 'Noto Sans', sans-serif;}
+    font-family: 'Jua', sans-serif;
+    font-size: 3em !important;
+}
+
+
+#output{
+    margin-bottom: 2em;
+}
 
 #fsButton {
     display: inline-block;
@@ -123,4 +133,39 @@ font-family: 'Noto Sans', sans-serif;}
 .myButton:hover{
     background-color: #95BF74;
     width: 98%;
+}
+
+hr{
+  border: 2px solid white !important; 
+  border-radius: 10px;
+}
+
+.slider {
+    -webkit-appearance: none;  /* Override default CSS styles */
+    appearance: none;
+    width: 50%; /* Full-width */
+    height: 25px; /* Specified height */
+    background: #ffffff; /* Grey background */
+    border-radius: 1em;
+    outline: none; /* Remove outline */
+    opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+    margin-bottom: 1em;
+    margin-top: 1em;
+    -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+    transition: opacity .2s;
+}
+/* Mouse-over effects */
+.slider:hover {
+    opacity: 1; /* Fully shown on mouse-over */
+}
+
+/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Override default look */
+    appearance: none;
+    width: 25px; /* Set a specific slider handle width */
+    height: 25px; /* Slider handle height */
+    border-radius: 1em;
+    background: #95BF74; /* Green background */
+    cursor: pointer; /* Cursor on hover */
 }

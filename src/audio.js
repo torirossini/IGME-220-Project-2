@@ -124,9 +124,6 @@ function updateBar(){
 
                 progressBar.fillRect(0,0,progress,50);
         }
-
-    
-    
 }
 
 function loadSoundFile(filepath){

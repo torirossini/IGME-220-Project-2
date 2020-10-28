@@ -11,6 +11,7 @@ import * as utils from './utils.js';
 
 let ctx,canvasWidth,canvasHeight,gradient,analyserNode,audioData;
 
+let colorScalar = 1;
 
 function setupCanvas(canvasElement,analyserNodeRef){
 	// create drawing context
@@ -23,6 +24,11 @@ function setupCanvas(canvasElement,analyserNodeRef){
 	// this is the array where the analyser data will be stored
     audioData = new Uint8Array(analyserNode.fftSize/2);
 	
+}
+
+function setColorScalar(value){
+    value = Number(value);
+    colorScalar = value;
 }
 
 function draw(params={}){
@@ -68,9 +74,9 @@ function draw(params={}){
             {
                 
                 let color = 'rgb(' + 
-                audioData[0] + ', ' + 
-                audioData[10] * i/2 + ', ' + 
-                audioData[20] * i/4 + ')'
+                audioData[i] * colorScalar + ', ' + 
+                audioData[i] + ', ' + 
+                audioData[i] + ')'
                 ctx.fillStyle = color;
                 ctx.strokeStyle = color;
                 
@@ -157,18 +163,6 @@ function draw(params={}){
                               canvasWidth, 
                               canvasHeight/3*2);
             ctx.stroke(); 
-//            for(let i = 0; i<audioData.length; i++)
-//                {
-//                    let percent = audioData[i]/255;
-//                    
-//                    let circleRadius = percent * maxRadius;
-//                    ctx.beginPath();
-//                    ctx.fillStyle = utils.makeColor(255,111,111,.34-percent/3.0);
-//                    ctx.arc(canvasWidth/2, canvasHeight/2, circleRadius, 0, 2*Math.PI, false);
-//                    ctx.fill();
-//                    ctx.closePath();
-//                    
-//                }
             ctx.restore();
         }
     
@@ -207,13 +201,13 @@ function draw(params={}){
                    
             } // end if
             
-//            if(params.invertColors)
-//            {
-//                let red = data[i],green = data[i+1], blue = data[i+2];
-//                data[i] = 255-red;
-//                data[i+1] = 255-green;
-//                data[i+2] = 255-blue;
-//            }
+            if(params.currentFilter == "invert")
+            {
+                let red = data[i],green = data[i+1], blue = data[i+2];
+                data[i] = 255-red;
+                data[i+1] = 255-green;
+                data[i+2] = 255-blue;
+            }
 	} // end for
 //    
 //    if(params.showEmboss)
@@ -233,4 +227,4 @@ function draw(params={}){
 		
 }
 
-export {setupCanvas,draw};
+export {setupCanvas,draw, setColorScalar};

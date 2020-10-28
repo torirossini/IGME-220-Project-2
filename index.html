@@ -34,13 +34,9 @@
     
 	<div id="controls">
 		
-		<section id="sliders">
-
-			Pan: <input type="range" id="panSlider" min="-2" max="2" value="0" step="0.01">
-			<span id="panLabel">???</span>
-            <br>
-			Slider 3: <input type="range" id="slider3" min="0" max="2" value="1" step="0.01">
-			<span id="slider3Label">???</span>
+		<section id="color-scalar">
+			Color Shift: <input type="range" id="color-slider" min="0" max="2" value="1" step="0.01" class="slider">
+			<span id="color-label">???</span>
 		</section>
 
         
@@ -53,9 +49,9 @@
             <span><input type="checkbox" id="circlesCB" checked><label for="circlesCB">Show Waves</label></span>
 
         </section>
-        
+        <hr>
         <section id="filters">
-            <span>Filters</span>
+            <label class="group-heading">Visual Filters</label>
             <br>
                 <input type="radio" id="none" name="filter" value="none" checked>
                 <label for="none">None</label><br>
@@ -63,31 +59,32 @@
                 <input type="radio" id="grayscale" name="filter" value="grayscale">
                 <label for="grayscale">Grayscale</label><br>
 
-                <input type="radio" id="female" name="filter" value="female">
-                <label for="female">Filter2</label><br>
-
-                <input type="radio" id="other" name="filter" value="other">
-                <label for="other">Filter3</label> 
+                <input type="radio" id="invert" name="filter" value="invert">
+                <label for="female">Invert</label><br>
         </section>
 
 	</div>
     
-    <div id="trackInfo">
-            <div id = "output">
+    <div id="track-info">
+        <div id = "output">
           Press a key to see its code
         </div>
         
         <section>
         
-            			Volume: <input type="range" id="volumeSlider" min="0" max="2" value="1" step="0.01">
-			<span id="volumeLabel">???</span>
+            Volume: <input type="range" id="volumeSlider" min="0" max="2" value="1" step="0.01" class="slider">
+            <span id="volumeLabel">???</span>
+            <br>
+
+            Pan: <input type="range" id="panSlider" min="-2" max="2" value="0" step="0.01" class="slider">
+			<span id="panLabel">???</span>
             <br>
             <section id="tracks">
-                <label>Track: 
+                <label>Provided Tracks: 
                     <select id="trackSelect">
-                        <option value="media/New Adventure Theme.mp3" selected>New Adventure Theme</option>
-                        <option value="media/Peanuts Theme.mp3">Peanuts Theme</option>
-                        <option value="media/The Picard Song.mp3">The Picard Song</option>
+                        <option value="media/flux.mp3" selected>Flux</option>
+                        <option value="media/adventure.mp3">Adventure</option>
+                        <option value="media/lullaby.mp3">Lullaby</option>
                     </select>
                 </label>
             </section>
