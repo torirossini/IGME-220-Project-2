@@ -23,7 +23,8 @@ header{
 }
 
 #progress{
-    background: #fafafa;
+    
+    border-radius: 2em;
 }
 
 main{

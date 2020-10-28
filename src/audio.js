@@ -3,7 +3,7 @@ import * as utils from "./utils.js";
 // 1 - our WebAudio context, **we will export and make this public at the bottom of the file**
 let audioCtx;
 
-let progressBar, currTimeEl, durationEl;
+let progressBar, progressEl, currTimeEl, durationEl;
 
 let paused = true;
 
@@ -84,13 +84,14 @@ the amplitude of that frequency.
     //console.log("asdfsfdds   " + duration);
     durationEl = document.querySelector("#duration");
     currTimeEl = document.querySelector("#current-time");
+    progressEl = document.querySelector("#progress");
 
     durationEl.innerHTML = utils.convertElapsedTime(0);
     currTimeEl.innerHTML =  utils.convertElapsedTime(currentTime);
 
     progressBar.save();
     progressBar.fillStyle = "#000000";
-    progressBar.fillRect(0,0,progressBar.width,progressBar.height);
+   console.log(progressBar.width); progressBar.fillRect(0,0,progressEl.width,progressEl.height);
     progressBar.restore();
 
     loop();
@@ -112,7 +113,7 @@ function updateBar(){
     
     if(!paused)
         {                progressBar.clearRect(0,0,progressBar.width,50);
-                progressBar.fillStyle = "#000";
+                progressBar.fillStyle = "#95BF74";
                 progressBar.fillRect(0,0,progressBar.width, progressBar.height);
 
                 var currTime = element.currentTime;
@@ -124,7 +125,7 @@ function updateBar(){
 
                 var percentage = currTime/duration;
 
-                var progress = (progressBar.width * percentage);
+                var progress = (progressEl.width * percentage);
 
                 progressBar.fillRect(0,0,progress,50);
         }
