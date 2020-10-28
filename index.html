@@ -4,63 +4,98 @@
 	<meta charset="utf-8" />
 	<title>Project 2</title>
 	<link href="styles/default-styles.css" type="text/css" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@500&display=swap" rel="stylesheet">
-
 	<script src="./src/loader.js" type="module"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
 </head>
 <body>
-<main>
+<header>
     <div id = "heading">
         <h1>Note Visualizer</h1>
         <p>Here's some placeholder text on how to use this app.</p>
-        <div id = "output">
-          Press a key to see its code
-        </div>
     </div>
-	<canvas width="800" height="400"></canvas>
+</header>
+
+<main>
+	<canvas id="visualizer" width="800" height="400"></canvas>
+
+    <div id="information">
+    <div class="text-center">
+        <button id="fsButton" class="myButton">Full Screen</button>
+        <button id="playButton" data-playing="no" class="myButton"></button>
+        <canvas id="progress" width="700" height="50"></canvas>
+        <br>
+        <span id="current-time">0:00</span> /
+        <span id="duration">0:00</span>
+            
+    </div>
     
 	<div id="controls">
-		<section>
-<!--			<button id="playButton" data-playing="no"></button>-->
-			<button id="fsButton">Full Screen</button>
 		
-<!--
-			<label>Track: 
-				<select id="trackSelect">
-					<option value="media/New Adventure Theme.mp3" selected>New Adventure Theme</option>
-					<option value="media/Peanuts Theme.mp3">Peanuts Theme</option>
-					<option value="media/The Picard Song.mp3">The Picard Song</option>
-				</select>
-			</label>
--->
-		</section>
-		
-		<section>
-			Volume: <input type="range" id="volumeSlider" min="0" max="2" value="1" step="0.01">
-			<span id="volumeLabel">???</span>
+		<section id="sliders">
+            <br>
+			Slider 2: <input type="range" id="slider2" min="0" max="2" value="1" step="0.01">
+			<span id="slider2Label">???</span>
+            <br>
+			Slider 3: <input type="range" id="slider3" min="0" max="2" value="1" step="0.01">
+			<span id="slider3Label">???</span>
 		</section>
 
         
-        <section>
-            <span><input type="checkbox" id="gradientCB" checked><label for="gradientCB">Show Gradient</label></span>
+        <section id="checkboxes">
+            
+            <span><input type="checkbox" id="gradientCB" checked><label for="gradientCB">Show Gradient</label></span> 
+            |
             <span><input type="checkbox" id="barsCB" checked><label for="barsCB">Show Bars</label></span>
+            |
             <span><input type="checkbox" id="circlesCB" checked><label for="circlesCB">Show Waves</label></span>
 
         </section>
-        <section>
-            <label>Filters</label>
+        
+        <section id="filters">
+            <span>Filters</span>
             <br>
-            <input type="radio" id="none" name="filter" value="none">
-            <label for="none">None</label><br>
-             <input type="radio" id="grayscale" name="filter" value="grayscale">
-            <label for="grayscale">Grayscale</label><br>
-            <input type="radio" id="female" name="filter" value="female">
-            <label for="female">Female</label><br>
-            <input type="radio" id="other" name="filter" value="other">
-            <label for="other">Other</label> 
+                <input type="radio" id="none" name="filter" value="none" checked>
+                <label for="none">None</label><br>
+
+                <input type="radio" id="grayscale" name="filter" value="grayscale">
+                <label for="grayscale">Grayscale</label><br>
+
+                <input type="radio" id="female" name="filter" value="female">
+                <label for="female">Filter2</label><br>
+
+                <input type="radio" id="other" name="filter" value="other">
+                <label for="other">Filter3</label> 
         </section>
 
 	</div>
+    
+    <div id="trackInfo">
+            <div id = "output">
+          Press a key to see its code
+        </div>
+        
+        <section>
+        
+            			Volume: <input type="range" id="volumeSlider" min="0" max="2" value="1" step="0.01">
+			<span id="volumeLabel">???</span>
+            <br>
+            <section id="tracks">
+                <label>Track: 
+                    <select id="trackSelect">
+                        <option value="media/New Adventure Theme.mp3" selected>New Adventure Theme</option>
+                        <option value="media/Peanuts Theme.mp3">Peanuts Theme</option>
+                        <option value="media/The Picard Song.mp3">The Picard Song</option>
+                    </select>
+                </label>
+            </section>
+            
+   
+
+		</section>
+    </div>
+    
+    </div>
+    
 </main>
 </body>
 </html>

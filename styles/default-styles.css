@@ -1,20 +1,59 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans&family=Noto+Sans&display=swap');
+
 body {
-	background: #0A0908;
+	background: #0A0908 !important;
 	font-family: tahoma, verdana, sans serif;
-    color:#FFBC42
+    color: #077187;
+}
+header{
+    padding-bottom: 1em;
+    background: #077187;
+    color: white;
+    font-size: 1.5em;
+        padding: 1.5em;
+    font-family: 'Noto Sans', sans-serif;
 }
 
-canvas {
-	margin-left: 1rem;
-	margin-top: 1rem;
-	margin-bottom: 1rem;
-	box-shadow: 4px 4px 8px rgba(0,0,0,0.5);
+#visualizer {
+    margin-top: 1em;
+    margin-bottom: 1em;
 	background: #fafafa;
+    width: 73em;
+    float: left;
+}
+
+#progress{
+    background: #fafafa;
+}
+
+main{
+    background: #077187;
+}
+
+#information{
+    float: left;  
+    width: 70em;
+    padding-left: 3em;
+    padding-right: 3em;
+    background-color: #077187;
+    border-radius: 2em;
+    color: white;
+    margin: 1em;
+    
 }
 
 #controls{
-  margin-left: 1rem;
-    font-family: 'Rubik', sans-serif;
+    padding: 1rem;
+    font-family: 'Noto Sans', sans-serif;
+    float: left;
+    width: 50%;
+}
+
+#trackInfo{
+    padding: 1rem;
+    font-family: 'Noto Sans', sans-serif;
+    float: left;
+    width: 50%;
 }
 
 #volumeLabel{
@@ -25,10 +64,6 @@ section{
   margin-bottom: 1rem;
 }
 
-#playButton{
-  font-size: 1.2rem;
-  width: 6rem;
-}
 
 button[data-playing="yes"]:after{
   content: "Pause";
@@ -38,31 +73,46 @@ button[data-playing="no"]:after{
   content: "Play";
 }
 
-#heading{
-    padding: 1.5em;
-    font-family: 'Rubik', sans-serif;
-}
-
 h1{
-    font-family: 'Rubik', sans-serif;
+font-family: 'Noto Sans', sans-serif;}
+
+#fsButton {
+    display: inline-block;
+    background-color: #659B5E;
+    border-radius: 2em;
+    border: 4px double #cccccc;
+    color: #eeeeee;
+    text-align: center;
+    font-size: 1em;
+    padding: 1em;
+    width: 90%;
+    transition: all 0.3s;
+    cursor: pointer;
+    margin: 5px;
 }
 
-  #fsButton {
-        display: inline-block;
-        background-color: #7b38d8;
-        border-radius: 2em;
-        border: 4px double #cccccc;
-        color: #eeeeee;
-        text-align: center;
-        font-size: 1em;
-        padding: 1em;
-        width: 10em;
-        transition: all 0.3s;
-        cursor: pointer;
-        margin: 5px;
-      }
+#fsButton:hover {
+    background-color: #95BF74;
+    width: 98%;
+}
 
-      #fsButton:hover {
-        background-color: #f7c2f9;
-        width: 12em;
-      }
+.myButton{
+    display: inline-block;
+    background-color: #659B5E;
+    border-radius: 2em;
+    border: 4px double #cccccc;
+    color: #eeeeee;
+    text-align: center;
+    font-size: 1em;
+    padding: .5em;
+    width: 90%;
+    transition: all 0.3s;
+    cursor: pointer;
+    margin: 5px;
+    
+}
+
+.myButton:hover{
+    background-color: #95BF74;
+    width: 98%;
+}

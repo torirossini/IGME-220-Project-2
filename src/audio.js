@@ -1,5 +1,11 @@
+import * as utils from "./utils.js";
+
 // 1 - our WebAudio context, **we will export and make this public at the bottom of the file**
 let audioCtx;
+
+let progressBar, currTimeEl, durationEl;
+
+let paused = true;
 
 // **These are "private" properties - these will NOT be visible outside of this module (i.e. file)**
 // 2 - WebAudio nodes that are part of our WebAudio audio routing graph
@@ -69,10 +75,62 @@ the amplitude of that frequency.
     analyserNode.connect(gainNode);
     
     gainNode.connect(audioCtx.destination);
-    
+
+    progressBar = document.querySelector("#progress").getContext('2d'); 
+
+    let currentTime = element.currentTime;
+    let duration = element.duration;
+
+    //console.log("asdfsfdds   " + duration);
+    durationEl = document.querySelector("#duration");
+    currTimeEl = document.querySelector("#current-time");
+
+    durationEl.innerHTML = utils.convertElapsedTime(0);
+    currTimeEl.innerHTML =  utils.convertElapsedTime(currentTime);
+
+    progressBar.save();
+    progressBar.fillStyle = "#000000";
+    progressBar.fillRect(0,0,progressBar.width,progressBar.height);
+    progressBar.restore();
+
+    loop();
+
+
+
 
 
 // make sure that it's a Number rather than a String
+}
+
+function loop(){
+/* NOTE: This is temporary testing code that we will delete in Part II */
+	requestAnimationFrame(loop);
+    updateBar();
+};
+
+function updateBar(){
+    
+    if(!paused)
+        {                progressBar.clearRect(0,0,progressBar.width,50);
+                progressBar.fillStyle = "#000";
+                progressBar.fillRect(0,0,progressBar.width, progressBar.height);
+
+                var currTime = element.currentTime;
+                var duration = element.duration;
+
+                currTimeEl.innerHTML =  utils.convertElapsedTime(currTime);
+
+                durationEl.innerHTML = utils.convertElapsedTime(duration);
+
+                var percentage = currTime/duration;
+
+                var progress = (progressBar.width * percentage);
+
+                progressBar.fillRect(0,0,progress,50);
+        }
+
+    
+    
 }
 
 function loadSoundFile(filepath){
@@ -81,15 +139,21 @@ function loadSoundFile(filepath){
 
 function playCurrentSound(){
     element.play();
+    paused = false;
+    
+    currTimeEl.innerHTML =  utils.convertElapsedTime(0);
 }
 
 function pauseCurrentSound(){
     element.pause();
+    paused = true;
 }
 
 function setVolume(value){
     value = Number(value);
     gainNode.gain.value = value;
 }
+
+
 
 export{audioCtx, setupWebaudio, playCurrentSound, pauseCurrentSound, loadSoundFile, setVolume, analyserNode};

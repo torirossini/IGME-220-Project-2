@@ -1,3 +1,5 @@
+
+
 // Why are the all of these ES6 Arrow functions instead of regular JS functions?
 // No particular reason, actually, just that it's good for you to get used to this syntax
 // For Project 2 - any code added here MUST also use arrow function syntax
@@ -38,4 +40,19 @@ const goFullscreen = (element) => {
 	// .. and do nothing if the method is not supported
 };
 
-export {makeColor, getRandomColor, getLinearGradient, goFullscreen};
+const convertElapsedTime = (inputSeconds) =>
+{
+    
+    var seconds = Math.floor(inputSeconds % 60);
+    
+    if (seconds < 10){
+        seconds = "0"+seconds;
+    }
+    
+    var minutes = Math.floor(inputSeconds/60);
+
+    //console.log(minutes + ": " + seconds);
+    return minutes + ": " + seconds;
+}
+
+export {makeColor, getRandomColor, getLinearGradient, goFullscreen, convertElapsedTime};

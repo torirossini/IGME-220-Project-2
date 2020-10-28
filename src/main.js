@@ -21,7 +21,7 @@ const drawParams = {
 
 // 1 - here we are faking an enumeration
 const DEFAULTS = Object.freeze({
-	//sound1  :  "media/New Adventure Theme.mp3",
+	sound1  :  "media/New Adventure Theme.mp3",
     /*K_Q*/ 81 :  {file:"media/notes/a-3.mp3", note:"A-3"},
     /*K_W*/ 87 :  {file:"media/notes/a-4.mp3", note:"A-4"},
     /*K_E*/ 69 :  {file:"media/notes/a-5.mp3", note:"A-5"},
@@ -58,16 +58,27 @@ const DEFAULTS = Object.freeze({
 var output;
 var currentKey;
 var currentFilter;
+let duration,currentTime;
 
  function updateKeys(e){
     //set current key
-    currentKey = e.keyCode;
-    output.innerHTML = "current key: " + DEFAULTS[currentKey].note;
-     playNote(e);
+     if(DEFAULTS[e.keyCode])
+         {
+                currentKey = e.keyCode;
+                output.innerHTML = "current key: " + DEFAULTS[currentKey].note;
+                playNote(e); 
+         }
+     else{
+         console.log("Note not assigned for key " + e.keyCode);
+     }
+
  }
 
 function playNote(e){
      console.log('audioCtx.state before = $(audio.audioCtx.state)');
+    
+    audio.pauseCurrentSound();
+    e.target.dataset.playing = "no";
 
     if (audio.audioCtx.state == "suspended"){
         audio.audioCtx.resume();
@@ -92,10 +103,12 @@ function init(){
     output = document.getElementById("output");
     document.onkeydown = updateKeys;
     
-    audio.setupWebaudio(DEFAULTS[81]);
-	let canvasElement = document.querySelector("canvas"); // hookup <canvas> element
+    audio.setupWebaudio(DEFAULTS.sound1);
+	let canvasElement = document.querySelector("#visualizer"); // hookup <canvas> element
 	setupUI(canvasElement);
-    canvas.setupCanvas(canvasElement,audio.analyserNode);   loop();
+    canvas.setupCanvas(canvasElement,audio.analyserNode);   
+    audio.loadSoundFile(trackSelect.value);
+    loop();
 }
 
 function loop(){
@@ -131,8 +144,10 @@ function loop(){
 }
 
 function setupUI(canvasElement){
+    //D - track input
+    let trackSelect = document.querySelector("#trackSelect");
     // A - hookup fullscreen button
-//    const fsButton = document.querySelector("#fsButton");
+    const fsButton = document.querySelector("#fsButton");
 //
     // add .onclick event to button
     fsButton.onclick = e => {
@@ -176,29 +191,31 @@ function setupUI(canvasElement){
 //        drawParams.invertColors = !drawParams.invertColors;
 //    }
 //    
-//    playButton.onclick = e =>{
-//        console.log('audioCtx.state before = $(audio.audioCtx.state)');
-//
-//        if (audio.audioCtx.state == "suspended"){
-//            audio.audioCtx.resume();
-//        }
-//
-//        console.log('audioCtx.state after = $(audio.audioCtx.state)');
-//
-//        if(e.target.dataset.playing == "no")
-//            {
-//                audio.playCurrentSound();
-//                e.target.dataset.playing = "yes";
-//            }else{
-//                audio.pauseCurrentSound();
-//                e.target.dataset.playing = "no";
-//            }
-//    }
-//
-//    //C- hookup volume slider and label
-//    let volumeSlider = document.querySelector("#volumeSlider");
-//    let volumeLabel  = document.querySelector("#volumeLabel");
-//    
+    playButton.onclick = e =>{
+        console.log('audioCtx.state before = $(audio.audioCtx.state)');
+        
+        audio.loadSoundFile(trackSelect.value);
+        
+        if (audio.audioCtx.state == "suspended"){
+            audio.audioCtx.resume();
+        }
+
+        console.log('audioCtx.state after = $(audio.audioCtx.state)');
+
+        if(e.target.dataset.playing == "no")
+            {
+                audio.playCurrentSound();
+                e.target.dataset.playing = "yes";
+            }else{
+                audio.pauseCurrentSound();
+                e.target.dataset.playing = "no";
+            }
+    }
+
+    //C- hookup volume slider and label
+    let volumeSlider = document.querySelector("#volumeSlider");
+    let volumeLabel  = document.querySelector("#volumeLabel");
+    
     //on input event
     volumeSlider.oninput = e =>{
         //set gain
@@ -210,19 +227,22 @@ function setupUI(canvasElement){
 	
     volumeSlider.dispatchEvent(new Event("input"));
     
-//    //D - track input
-//    let trackSelect = document.querySelector("#trackSelect");
-//    
-//    //.onchange events for select
-//    trackSelect.onchange = e =>{
-//        audio.loadSoundFile(e.target.value);
-//        if(playButton.dataset.playing == "yes")
-//            {
-//                playButton.dispatchEvent(new MouseEvent("click"));
-//            }
-//    };
+    //.onchange events for select
+    trackSelect.onchange = e =>{
+        audio.loadSoundFile(e.target.value);
+        if(playButton.dataset.playing == "yes")
+            {
+                playButton.dispatchEvent(new MouseEvent("click"));
+            }
+    };
+    
+    var currTimeEl = document.querySelector("#current-time");
+    var durationEl = document.querySelector("#duration");
+
     
 
 } // end setupUI
+
+
 
 export {init};

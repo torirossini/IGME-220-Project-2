@@ -34,7 +34,7 @@ function draw(params={}){
 	
 	// 2 - draw background
 	ctx.save();
-    ctx.fillStyle = "black";
+    ctx.fillStyle = "#0A0908";
     ctx.globalAlpha = .1;
     ctx.fillRect(0,0,canvasWidth,canvasHeight);
     ctx.restore();
